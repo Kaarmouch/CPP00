@@ -4,7 +4,9 @@ int main()
 {
 	PhoneBook phoneBook;
 	std::string command;
+	std::string input;
 	int index;
+	bool validInput;
 
 	while (true) 
 	{
@@ -16,18 +18,30 @@ int main()
 		{
 			phoneBook.displayContact();
 			std::cout << "Entrez l'index du contact à afficher : ";
-			std::cin >> index;
-			std::cin.ignore(); // Ignorer le caractère de nouvelle ligne restant
-			phoneBook.displayContactDetail(index);
-
+			std::cin >> input;
+			validInput = true;
+			for (size_t i = 0; i < input.length(); i++)
+			{
+				if (!std::isdigit(static_cast<unsigned char>(input[i])))
+				{
+					validInput = false;
+					break;
+				}
+			}
+			if (validInput)
+			{
+				index = 0;
+				for (size_t i = 0; i < input.length(); i++)
+					index = index * 10 + (input[i] - '0');
+				phoneBook.displayContactDetail(index);
+			}
+			else 
+				std::cout << "Erreur : l'index doit être un entier valide." << std::endl;
 		} 
 		else if (command == "EXIT") 
-		{
 			break;
-
-		}
 	       	else 
 			std::cout << "Commande non reconnue." << std::endl;
 	}
-    return 0;
+	return 0;
 }

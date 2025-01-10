@@ -43,12 +43,10 @@ static std::string	userPromptTest(std::string question)
 		if (!std::cin.eof())
 			std::cin >> str;
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		if (str.empty())
-		{
-			std::cout << "Promte vide non accepté. Veuillez réessayer." << std::endl;
-		}
-		else 
+		if (!str.empty() && str.find_first_not_of(' ') != std::string::npos)
 			return str;
+		else 
+			std::cout << "Promte vide non accepté. Veuillez réessayer." << std::endl;
 	}
 }
 
